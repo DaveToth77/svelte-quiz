@@ -1,10 +1,10 @@
 <script>
 import Quiz from "./quiz.svelte";
 
-	export let name;
 </script>
 
 <main>
+	<h1>Trivia quiz</h1>
 	<Quiz quizName="New Quiz"/>
 
 </main>

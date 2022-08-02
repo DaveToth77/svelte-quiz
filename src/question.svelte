@@ -1,5 +1,7 @@
 <script>
 export let question = {}
+export let nextQuestion;
+export let addToScore;
 
 let isCorrect
 let isAnswered = false
@@ -24,8 +26,14 @@ const shuffle = (array) => {
 shuffle(allAnswers)
     
 const checkQuestion = (correct) => {
-isCorrect = correct
-isAnswered = true
+    if (!isAnswered) {
+        isCorrect = correct
+        isAnswered = true
+    
+    if(correct){
+        addToScore()
+        }
+    }
 }
 
 
@@ -37,13 +45,13 @@ isAnswered = true
     {@html question.question}
 </h3>
 {#if isAnswered}
-<h4>
+<h5>
     {#if isCorrect }
     You got it right!
     {:else}
         Wrong...Wrong, Wrong, Wrong!
     {/if}
-</h4>
+</h5>
 {/if}
 
 
@@ -51,6 +59,10 @@ isAnswered = true
 <ol>
      <button on:click={() => checkQuestion(answer.correct)}>{@html answer.answer}</button>
 </ol>
-   
-
 {/each}
+
+{#if isAnswered}
+    <div>
+        <button on:click={nextQuestion}>Next Question</button>
+    </div>
+{/if}

@@ -35,17 +35,28 @@ const checkQuestion = (correct) => {
         }
     }
 }
-
-
-
 </script>
+<style>
+    h5 {
+        color: blueviolet;
+    }
+
+    h5.isCorrect {
+        color: green;
+    }
+    
+    h5.wrong {
+        color: red;
+    }
+
+</style>
 
 
 <h3>
     {@html question.question}
 </h3>
 {#if isAnswered}
-<h5>
+<h5 class:isCorrect class:wrong={!isCorrect}>
     {#if isCorrect }
     You got it right!
     {:else}

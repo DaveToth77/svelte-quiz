@@ -1,10 +1,14 @@
 
 <script>
+	import Modal from './modal.svelte';
     import { fade, blur, fly, slide, scale } from "svelte/transition";
+    import { onMount, beforeUpdate, afterUpdate, onDestroy } from "svelte";
     import Question from "./question.svelte";
+
     let activeQuestion = 0
     let score = 0
     let quiz = getQuiz()
+    let isModalOpen = false;
 
 
 
@@ -27,14 +31,14 @@ const addToScore = () => {
 
 
 const resetQuiz = () => {
+    isModalOpen = false
     score = 0
     activeQuestion = 0
     quiz = getQuiz()
 }
 
-$: if(score > 1) {
-    alert('You Won!')
-    resetQuiz()
+$: if(score > 0) {
+    isModalOpen = true
 }
 
 $: questionNumber = activeQuestion + 1
@@ -49,7 +53,7 @@ $: questionNumber = activeQuestion + 1
 </style>
 
 <div>
-    <button on:click={resetQuiz}>Start New Quiz</button>
+    <button on:click ={resetQuiz}>Start New Quiz</button>
   
     <h3>My Score: {score}</h3>
     <h4>Question #{questionNumber}</h4>
@@ -67,7 +71,16 @@ $: questionNumber = activeQuestion + 1
       {/each}
   
     {/await}
-  </div>
+</div>
   
+{#if isModalOpen}
+
+    <Modal>
+        <h2>You Won!</h2>
+        <p>Congratulations</p>
+        <button on:click={resetQuiz}>Start Over</button>
+    </Modal>
+
+{/if}
 
 

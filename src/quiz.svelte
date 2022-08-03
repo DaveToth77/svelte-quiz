@@ -47,6 +47,10 @@ $: questionNumber = activeQuestion + 1
         position: absolute;
     }
 
+    .container {
+        min-height: 500px;
+    }
+
 </style>
 
 <div>
@@ -54,22 +58,22 @@ $: questionNumber = activeQuestion + 1
   
     <h3>My Score: {$score}</h3>
     <h4>Question #{questionNumber}</h4>
-  
-    {#await quiz}
-      Loading....
-    {:then data}
-  
-      {#each data.results as question, index}
-        {#if index === activeQuestion}
-          <div in:fly={{ x: 100 }} out:fly={{ x: -200 }} class="fadeWrapper">
-            <Question  {nextQuestion} {question} />
-          </div>
-        {/if}
-      {/each}
-  
-    {/await}
-</div>
-  
+    <div class="container">
+        {#await quiz}
+        Loading....
+        {:then data}
+    
+        {#each data.results as question, index}
+            {#if index === activeQuestion}
+            <div in:fly={{ x: 100 }} out:fly={{ x: -200 }} class="fadeWrapper">
+                <Question  {nextQuestion} {question} />
+            </div>
+            {/if}
+        {/each}
+        
+            {/await}
+    </div>
+</div>  
 {#if isModalOpen}
 
     <Modal on:close={resetQuiz}>
